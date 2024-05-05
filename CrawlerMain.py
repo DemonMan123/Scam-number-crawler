@@ -8,7 +8,7 @@ import os
 from datetime import datetime
 import pyfiglet
 from termcolor import colored
-import webbrowser
+import webbrowser # This was imported for test reasons earlier in code during develpoment. You can use this if you want or remove this line idc.
 
 script_directory = os.path.dirname(os.path.abspath(__file__))
 
