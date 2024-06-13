@@ -67,28 +67,34 @@ class Main():
                 target_links = soup.find_all('a', class_=target_class)
                 
                 if result == "1":
-                    for link in target_links:
-                        link_text = link.text
-                        href = link['href']
-
-                        phone_numbers = re.findall(r'\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b', link_text)
-
-                        for number in phone_numbers:
-                            if number not in seen_numbers:
-                                formatted_output = f"Number: {number}, Link: {href}"
-                                output_file.write(formatted_output + "\n")
-                                seen_numbers.add(number)
-                elif result == "2":
-                    for link in target_links:
-                        if link not in seen_links:
+                    try:
+                        for link in target_links:
                             link_text = link.text
                             href = link['href']
+
+                            phone_numbers = re.findall(r'\b\d{3}[-.\s]?\d{3}[-.\s]?\d{4}\b', link_text)
+
+                            for number in phone_numbers:
+                                if number not in seen_numbers:
+                                    formatted_output = f"Number: {number}, Link: {href}"
+                                    output_file.write(formatted_output + "\n")
+                                    seen_numbers.add(number)
+                    except:
+                        exit("An erorr occured, exiting.")
+                elif result == "2":
+                    try:
+                        for link in target_links:
+                            if link not in seen_links:
+                                link_text = link.text
+                                href = link['href']
                         
-                            output_file.write(f"Result: {link_text}, link: {href}\n")
-                            seen_links.add(link)
-                else:
-                    print("Invalid option.. exiting.")
-                        
+                                output_file.write(f"Result: {link_text}, link: {href}\n")
+                                seen_links.add(link)
+                    except:
+                        exit("An error has occured. Exiting.")
+                    else:
+                        print("Invalid option.. exiting.")
+                    
                         
             except Exception as e:
                 print(f"Error accessing URL {url}: {e}")
